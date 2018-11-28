@@ -1,0 +1,11 @@
+<div class="content">
+  <ul>
+    <li *ngFor="let techno of technos">
+      <div>
+        <h3 (click)=showDetail(techno)>{{techno.name}}</h3>
+        <p>{{techno.version}}</p>
+      </div>
+    </li>
+  </ul>
+</div>
+<dj-detail-techno [selectedTechno]="selectedTechno"></dj-detail-techno>

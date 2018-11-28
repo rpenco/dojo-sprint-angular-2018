@@ -1,0 +1,11 @@
+<form>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Selectionner une techno</label>
+    <select name="techno1Name" (change)="onSelect()" [(ngModel)]="selectedTechno" class="form-control" id="techno1Id">
+      <option *ngFor="let technoLight of technoLights" value="{{technoLight.id}}">
+        {{technoLight.name}}
+      </option>
+    </select>
+  </div>
+  <dj-detail-techno [selectedTechno]="selectedTechno"></dj-detail-techno>
+</form>
