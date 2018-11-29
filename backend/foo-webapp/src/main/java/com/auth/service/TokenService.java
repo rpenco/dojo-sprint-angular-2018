@@ -1,11 +1,14 @@
-package com.foo.service;
+package com.auth.service;
 
+import com.foo.dto.UserDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
+import java.time.LocalDateTime;
+import java.time.temporal.TemporalUnit;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,19 +45,23 @@ public class TokenService {
 
     }
 
-    public String createJWT(...) {
+    public String createJWT(UserDto userDto) {
 
         //set refresh time
         Map<String, Object> mapClaim = new HashMap<>();
+        mapClaim.put("username", userDto.getUsername());
+        mapClaim.put("userid", "123456");
+        mapClaim.put("role", "admin");
+        mapClaim.put("tgi", "T0123456");
 
         //Let's set the JWT Claims
         return Jwts.builder()
                 .setClaims(mapClaim)
-                .setHeaderParam("type", "JWT bearer")
+                .setHeaderParam("typ", "JWT")
                 .setIssuer(ISSUER)
-                .setIssuedAt(nowDate)
-                .setExpiration(expDate)
-                //.setSubject()
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_DELAIS_MS))
+                .setSubject(userDto.getUsername())
                 .signWith(signatureAlgorithm, signingKey)
                 .compact();
     }

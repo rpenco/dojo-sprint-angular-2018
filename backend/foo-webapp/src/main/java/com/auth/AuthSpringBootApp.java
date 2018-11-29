@@ -1,18 +1,8 @@
-package com.foo;
+package com.auth;
 
 
-import com.auth.config.AuthConfigurer;
-import com.auth.filter.AuthFilter;
-import com.foo.dto.FooDto;
-import com.foo.dto.TechnoDto;
-import com.foo.dto.TechnoLightDto;
-import com.foo.dto.UserContext;
-import com.foo.storage.TechnoService;
-import com.foo.storage.entity.TechnoEntity;
-import com.foo.storage.repository.TechnoRepository;
-import ma.glasnost.orika.MapperFactory;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.auth.service.TokenService;
+import com.foo.CorsConfigurer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -26,10 +16,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 @EnableConfigurationProperties
-@ComponentScan(basePackages = "com")
-@EnableJpaRepositories(basePackages = "com.foo")
-@EntityScan(basePackages = "com.foo")
-public class FooSpringBootApp extends SpringBootServletInitializer {
+@ComponentScan(basePackages = "com.auth")
+@EnableJpaRepositories(basePackages = "com.auth")
+@EntityScan(basePackages = "com.auth")
+public class AuthSpringBootApp extends SpringBootServletInitializer {
 
     /**
      * CORS configuration
@@ -41,18 +31,16 @@ public class FooSpringBootApp extends SpringBootServletInitializer {
         return new CorsConfigurer();
     }
 
-    @Bean
-    public UserContext toto() {
-        return new UserContext();
-    }
+    @Bean(initMethod = "init")
+    public TokenService tokenService() { return new TokenService();}
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(FooSpringBootApp.class);
+        return application.sources(AuthSpringBootApp.class);
     }
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(FooSpringBootApp.class, args);
+        SpringApplication.run(AuthSpringBootApp.class, args);
     }
 
 }
