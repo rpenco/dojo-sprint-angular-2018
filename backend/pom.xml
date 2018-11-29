@@ -29,6 +29,7 @@
         <orika.version>1.5.1</orika.version>
         <commons-lang3.version>3.6</commons-lang3.version>
         <jadira.version>6.0.1.GA</jadira.version>
+        <jjwt.version>0.7.0</jjwt.version>
     </properties>
 
     <dependencies>
@@ -55,6 +56,11 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jjwt.version}</version>
         </dependency>
 
         <!-- spring -->
